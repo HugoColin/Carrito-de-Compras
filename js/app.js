@@ -39,9 +39,31 @@ function leerDatosCurso( curso ) {
         cantidad: 1,
     }
 
-    // Agrega elementos al arreglo de carrito
-    // articulosCarrito = [ ...articulosCarrito, infoCurso ];
-    articulosCarrito.push( infoCurso );
+    // Revisa si un elemento ya existe en el carrito
+    const existe = articulosCarrito.some( curso => curso.id === infoCurso.id );
+
+    if ( existe ){
+        // Actualizamos la cantidad
+        const cursos = articulosCarrito.map( curso => {
+            if ( curso.id === infoCurso.id ){
+                curso.cantidad++;
+                return curso; // retorna el objeto actualizado
+            }
+            else {
+                return curso; // retorna los objetos que no son duplicados
+            }
+
+        } );
+
+        rticulosCarrito = [ ...cursos ];
+    }
+
+    else{
+        // Agregamos el curso al carrito
+        // Agrega elementos al arreglo de carrito
+        // articulosCarrito = [ ...articulosCarrito, infoCurso ];
+        articulosCarrito.push( infoCurso );
+    }
 
     console.log( articulosCarrito );
 
@@ -56,10 +78,17 @@ function carritoHTML() {
 
     // Recorre el carrito y genera el HTML
     articulosCarrito.forEach( curso => {
+
+        const { imagen, titulo, precio, cantidad, id } = curso;
         const row = document.createElement( 'tr' );
+
         row.innerHTML = `
+            <td><img src="${ imagen }" width="100"></td>
+            <td>${ titulo }</td>
+            <td>${ precio }</td>
+            <td>${ cantidad }</td>
             <td>
-                ${ curso.titulo }
+                <a href="#" class="borrar-curso" data-id="${ id }"> X </a>
             </td>
         `;
 
