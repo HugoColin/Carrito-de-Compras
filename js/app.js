@@ -77,7 +77,7 @@ function leerDatosCurso( curso ) {
 
         } );
 
-        rticulosCarrito = [ ...cursos ];
+        articulosCarrito = [ ...cursos ];
     }
 
     else{
