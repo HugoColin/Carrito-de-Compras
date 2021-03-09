@@ -19,6 +19,7 @@ function cargarEventListeners(){
         articulosCarrito = [];
 
         limpiarHTML(); // Eliminamos todo el HTML
+        checarCarrito();
     } );
 }
 
@@ -45,6 +46,8 @@ function eliminarCurso( e ) {
         articulosCarrito = articulosCarrito.filter( curso => curso.id !== cursoId )
         
         carritoHTML(); // itera sobre el carrito y muestra su HTML
+
+        checarCarrito();
 
     }
 }
@@ -87,7 +90,7 @@ function leerDatosCurso( curso ) {
         articulosCarrito.push( infoCurso );
     }
 
-    console.log( articulosCarrito );
+    checarCarrito();
 
     carritoHTML();
 }
@@ -129,4 +132,16 @@ function limpiarHTML() {
     while ( contenedorCarrito.firstChild ){
         contenedorCarrito.removeChild( contenedorCarrito.firstChild );
     }
+}
+
+function checarCarrito() {
+
+    if ( articulosCarrito.length !== 0) {
+        vaciarCarritoBtn.innerText = 'Vaciar Carrito';
+    }
+
+    else{
+        vaciarCarritoBtn.innerText = 'Carrito Vacio';
+    }
+    
 }
