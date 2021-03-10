@@ -27,7 +27,7 @@ function cargarEventListeners(){
     numeroCursos.type = 'number';
     numeroCursos.min = 1;
     numeroCursos.value = 1;
-    numeroCursos.classList.add( 'u-full-width', 'button-primary', 'button' );
+    numeroCursos.classList.add( 'u-full-width', 'button-primary', 'button', 'cantidad-curso' );
     cards.insertBefore( numeroCursos, cards.children[ 4 ] );
 }
 
@@ -69,8 +69,12 @@ function leerDatosCurso( curso ) {
         titulo: curso.querySelector( 'h4' ).textContent,
         precio: curso.querySelector( '.precio span' ).textContent,
         id: curso.querySelector( 'a' ).getAttribute( 'data-id' ),
-        cantidad: 1,
+        cantidad: Number.parseInt( curso.querySelector( '.cantidad-curso' ).value ),
+        total: 0,
     }
+
+    let precioAux = infoCurso.precio;
+    infoCurso.precio = Number.parseInt( precioAux.slice( precioAux.indexOf( '$' ) + 1 ) );
 
     // Revisa si un elemento ya existe en el carrito
     const existe = articulosCarrito.some( curso => curso.id === infoCurso.id );
@@ -79,7 +83,8 @@ function leerDatosCurso( curso ) {
         // Actualizamos la cantidad
         const cursos = articulosCarrito.map( curso => {
             if ( curso.id === infoCurso.id ){
-                curso.cantidad++;
+                curso.cantidad = infoCurso.cantidad;
+                curso.total = infoCurso.cantidad * infoCurso.precio;
                 return curso; // retorna el objeto actualizado
             }
             else {
@@ -99,7 +104,6 @@ function leerDatosCurso( curso ) {
     }
 
     checarCarrito();
-
     carritoHTML();
 }
 
@@ -112,7 +116,7 @@ function carritoHTML() {
     // Recorre el carrito y genera el HTML
     articulosCarrito.forEach( curso => {
 
-        const { imagen, titulo, precio, cantidad, id } = curso;
+        const { imagen, titulo, precio, cantidad, id, total } = curso;
         const row = document.createElement( 'tr' );
 
         row.innerHTML = `
@@ -120,9 +124,8 @@ function carritoHTML() {
             <td>${ titulo }</td>
             <td>${ precio }</td>
             <td>${ cantidad }</td>
-            <td>
-                <a href="#" class="borrar-curso" data-id="${ id }"> X </a>
-            </td>
+            <td>${ precio * cantidad }</td>
+            <td><a href="#" class="borrar-curso" data-id="${ id }"> X </a></td>
         `;
 
         // Agrega el HTML del carrito en el tbody
