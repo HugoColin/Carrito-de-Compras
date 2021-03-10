@@ -25,12 +25,14 @@ function cargarEventListeners(){
 
     for (const card of cards) {
 
+        const ancla = card.querySelector( 'a' );
         const numeroCursos = document.createElement( 'input' );
         numeroCursos.type = 'number';
         numeroCursos.min = 1;
         numeroCursos.value = 1;
         numeroCursos.classList.add( 'u-full-width', 'button-primary', 'button', 'cantidad-curso' );        
-        card.appendChild( numeroCursos );
+        // card.appendChild( numeroCursos );
+        card.insertBefore( numeroCursos, ancla )
     }
 
 }
