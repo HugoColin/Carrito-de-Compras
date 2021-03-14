@@ -20,6 +20,7 @@ function cargarEventListeners(){
         articulosCarrito = [];
 
         limpiarHTML(); // Eliminamos todo el HTML
+        sincronizarStorage();
         checarCarrito();
     } );
 
@@ -144,6 +145,7 @@ function carritoHTML() {
     } );
 
     sincronizarStorage();
+    checarCarrito();
 }
 
 // Elimina los cursos del tbody
