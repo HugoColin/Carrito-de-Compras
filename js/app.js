@@ -30,10 +30,14 @@ function cargarEventListeners(){
         numeroCursos.type = 'number';
         numeroCursos.min = 1;
         numeroCursos.value = 1;
-        numeroCursos.classList.add( 'u-full-width', 'button-primary', 'button', 'cantidad-curso' );        
-        // card.appendChild( numeroCursos );
+        numeroCursos.classList.add( 'u-full-width', 'button-primary', 'button', 'cantidad-curso' ); 
         card.insertBefore( numeroCursos, ancla )
     }
+
+    document.addEventListener( 'DOMContentLoaded', () => {
+        articulosCarrito = JSON.parse( localStorage.getItem( 'carrito' ) ) || [];
+        carritoHTML();
+    } );
 
 }
 
@@ -138,6 +142,8 @@ function carritoHTML() {
         contenedorCarrito.appendChild( row );
 
     } );
+
+    sincronizarStorage();
 }
 
 // Elimina los cursos del tbody
@@ -161,4 +167,8 @@ function checarCarrito() {
         vaciarCarritoBtn.innerText = 'Carrito Vacio';
     }
     
+}
+
+function sincronizarStorage() {
+    localStorage.setItem( 'carrito', JSON.stringify( articulosCarrito ) );
 }
